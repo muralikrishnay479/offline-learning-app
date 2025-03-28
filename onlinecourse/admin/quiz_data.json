@@ -32,11 +32,11 @@
     {
         "question": "what is your name?",
         "options": [
-            "1",
-            "2",
-            "34",
-            "4"
+            "a",
+            "b",
+            "c",
+            "d"
         ],
-        "answer": "4"
+        "answer": "2"
     }
 ]

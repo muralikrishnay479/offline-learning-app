@@ -1,5 +1,3 @@
-attempt.php
-
 <?php
 session_start();
 $quizData = json_decode(file_get_contents('quiz_data.json'), true) ?? [];
@@ -35,22 +33,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Attempt Quiz</title>
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
-    <h2>Attempt Quiz</h2>
-    <form method="post">
-        <?php foreach ($quizData as $index => $quiz) : ?>
-            <p><strong><?php echo $quiz['question']; ?></strong></p>
-            <?php foreach ($quiz['options'] as $key => $option) : ?>
-                <label>
-                    <input type="radio" name="answer[<?php echo $index; ?>]" value="<?php echo $key + 1; ?>" required>
-                    <?php echo $option; ?>
-                </label>
-                <br>
-            <?php endforeach; ?>
-        <?php endforeach; ?>
-        <br>
-        <input type="submit" value="Submit Quiz">
-    </form>
+<?php include('../base.php'); ?>
+<?php include('includes/menubar.php'); ?>
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-head-line">Attempt Quiz</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Answer the following questions
+                    </div>
+                    <div class="panel-body">
+                        <form method="post">
+                            <?php foreach ($quizData as $index => $quiz) : ?>
+                                <div class="form-group">
+                                    <label><strong><?php echo htmlspecialchars($quiz['question']); ?></strong></label>
+                                    <?php foreach ($quiz['options'] as $key => $option) : ?>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="answer[<?php echo $index; ?>]" value="<?php echo $key + 1; ?>" required>
+                                                <?php echo htmlspecialchars($option); ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endforeach; ?>
+                            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php include('../includes/footer.php');?>
+<!-- JAVASCRIPT AT THE BOTTOM TO REDUCE LOADING TIME -->
+<script src="../assets/js/jquery-1.11.1.js"></script>
+<script src="../assets/js/bootstrap.js"></script>
 </body>
 </html>

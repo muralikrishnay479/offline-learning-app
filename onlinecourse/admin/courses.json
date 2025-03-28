@@ -10,5 +10,23 @@
         "course_name": "python",
         "course_unit": "2",
         "pdf_url": ""
+    },
+    {
+        "course_code": "C003",
+        "course_name": "HTML",
+        "course_unit": "2",
+        "pdf_url": ""
+    },
+    {
+        "course_code": "C004",
+        "course_name": "CSS",
+        "course_unit": "2",
+        "pdf_url": ""
+    },
+    {
+        "course_code": "C005",
+        "course_name": "WT",
+        "course_unit": "3",
+        "pdf_url": ""
     }
 ]

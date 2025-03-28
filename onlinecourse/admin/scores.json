@@ -8,5 +8,15 @@
         "username": "admin",
         "attempted": 4,
         "score": 1
+    },
+    {
+        "username": "Guest",
+        "attempted": 4,
+        "score": 0
+    },
+    {
+        "username": "Guest",
+        "attempted": 4,
+        "score": 0
     }
 ]

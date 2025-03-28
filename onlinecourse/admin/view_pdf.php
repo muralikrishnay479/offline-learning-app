@@ -1,44 +1,58 @@
-view_pdf.php
-<?php
-$files = file_exists("pdf_data.txt") ? file("pdf_data.txt") : [];
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View PDFs</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        h2 { text-align: center; }
-        .pdf-list { margin-top: 20px; }
-        .pdf-item { padding: 10px; border-bottom: 1px solid #ddd; }
-    </style>
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
+<?php include('../base.php'); ?>
+<?php include('includes/menubar.php'); ?>
 
-<div class="container">
-    <h2>Uploaded PDFs</h2>
-    
-    <p style="text-align: center;"><a href="upload_pdf.php">Upload New PDF</a></p>
-
-    <div class="pdf-list">
-        <?php if (empty($files)) { ?>
-            <p>No PDFs uploaded yet.</p>
-        <?php } else {
-            foreach ($files as $file) {
-                list($title, $description, $filePath) = explode("||", trim($file));
-                echo "<div class='pdf-item'>
-                        <strong>$title</strong><br>
-                        <p>$description</p>
-                        <a href='$filePath' target='_blank'>View PDF</a>
-                      </div>";
-            }
-        } ?>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-head-line">Uploaded PDFs</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        View Your Uploaded PDFs
+                    </div>
+                    <div class="panel-body">
+                        <?php
+                        $file = "pdf_data.txt";
+                        if (file_exists($file)) {
+                            $entries = file($file, FILE_IGNORE_NEW_LINES);
+                            foreach ($entries as $entry) {
+                                list($title, $description, $path) = explode("||", $entry);
+                                echo "<div class='panel panel-info'>";
+                                echo "<div class='panel-heading'>" . htmlspecialchars($title) . "</div>";
+                                echo "<div class='panel-body'>";
+                                echo "<p>" . htmlspecialchars_decode($description) . "</p>";
+                                echo "<a href='$path' target='_blank' class='btn btn-primary'>View PDF</a>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        } else {
+                            echo "<div class='alert alert-warning text-center'>No PDFs uploaded yet.</div>";
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
+<?php include('../includes/footer.php');?>
+<!-- JAVASCRIPT AT THE BOTTOM TO REDUCE LOADING TIME -->
+<script src="../assets/js/jquery-1.11.1.js"></script>
+<script src="../assets/js/bootstrap.js"></script>
 </body>
 </html>

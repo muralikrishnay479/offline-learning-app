@@ -1,5 +1,6 @@
-Upload pdf : 
 <?php
+session_start();
+
 $uploadDir = 'uploads/';
 
 // Ensure the uploads directory exists
@@ -37,9 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["pdf_file"])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload PDF</title>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
+    <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
     <script>
         tinymce.init({
             selector: "textarea#description",
@@ -47,36 +50,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["pdf_file"])) {
             toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent"
         });
     </script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        h2 { text-align: center; }
-        .msg { color: red; text-align: center; margin-bottom: 10px; }
-        label { font-weight: bold; }
-        input, textarea, button { width: 100%; margin: 10px 0; padding: 10px; }
-    </style>
 </head>
 <body>
+<?php include('../base.php'); ?>
+<?php include('includes/menubar.php'); ?>
 
-<div class="container">
-    <h2>Upload PDF</h2>
-    <?php if ($msg) echo "<p class='msg'>$msg</p>"; ?>
-
-    <form method="post" enctype="multipart/form-data">
-        <label>Title:</label>
-        <input type="text" name="title" required>
-
-        <label>Description:</label>
-        <textarea id="description" name="description" rows="4"></textarea>
-
-        <label>Choose PDF File:</label>
-        <input type="file" name="pdf_file" accept="application/pdf" required>
-
-        <button type="submit">Upload PDF</button>
-    </form>
-
-    <p style="text-align: center;"><a href="view_pdf.php">View Uploaded PDFs</a></p>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-head-line">Upload PDF</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Upload PDF File
+                    </div>
+                    <font color="green" align="center"><?php echo htmlentities($msg); ?></font>
+                    <div class="panel-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Title:</label>
+                                <input type="text" class="form-control" name="title" placeholder="Enter PDF Title" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <textarea id="description" class="form-control" name="description" rows="4" placeholder="Enter PDF Description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose PDF File:</label>
+                                <input type="file" class="form-control" name="pdf_file" accept="application/pdf" required>
+                            </div>
+                            <button type="submit" class="btn btn-default">Upload PDF</button>
+                        </form>
+                        <p style="text-align: center; margin-top: 10px;">
+                            <a href="view_pdf.php">View Uploaded PDFs</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<?php include('../includes/footer.php');?>
+<!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME -->
+<script src="../assets/js/jquery-1.11.1.js"></script>
+<script src="../assets/js/bootstrap.js"></script>
 </body>
 </html>
